@@ -221,12 +221,28 @@
                 }
                 #search-svg{
                     display: inline-flex;
+                    position: relative;
                     justify-content: center;
                     align-items: center;
                     width: 68px;
                     height: 100%;
                     margin-right: 12px;
                 }
+                #search-svg::after {
+                    display: none;
+                }
+                #search> form:focus-within #search-svg::after {
+                    position: absolute;
+                    display: inline-block;
+                    right: 0;
+                    content: '';
+                    width: 1px;
+                    height: 20px;
+                    background-color: #e4e4e4;
+                    left: 80px;
+                    top: 20;
+                }
+                
                 #search> form img{
                     width: 70px;
                 }
@@ -244,7 +260,7 @@
                     color: white;
                 }
                 #search-input:focus::placeholder{ 
-                    color: rgb(230, 230, 230);
+                    color:#e4e4e4;
                 }
 
                 #search-right{
