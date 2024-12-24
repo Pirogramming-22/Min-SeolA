@@ -216,6 +216,9 @@
                     text-align: left;
                     padding-left: 30px;
                 }
+                #search>form:hover{
+                    box-shadow: 0px 2px 4px 0 rgba(0,0,0,.12);
+                }
                 #search-svg{
                     display: inline-flex;
                     justify-content: center;
@@ -237,6 +240,13 @@
                     outline: none;
                     margin-left: 10px;
                 }
+                #search-input::placeholder{
+                    color: white;
+                }
+                #search-input:focus::placeholder{ 
+                    color: rgb(230, 230, 230);
+                }
+
                 #search-right{
                     flex: 1;
                     display: flex;
@@ -255,6 +265,8 @@
                     background-size: 463px 440px;
                     background-position: -148px -301px;
                     background-repeat: no-repeat;
+                    margin-top: 5px;
+                    margin-right: 3px;
                     width: 24px;
                     height: 16px;
                 }
@@ -268,7 +280,15 @@
                     width: 10px;
                     height: 6px;
                 }
-                #search-button::before{
+                #search-button{
+                    padding: 17px 27px 16px 10px ;
+                }
+                #search-button >div {
+                    background: #03c75a;
+                    width: 25px;
+                    height: 25px;
+                }
+                #search-button>div::before{
                     content: "";
                     display:inline-block;
                     background-image: url(https://pm.pstatic.net/resources/asset/sp_main.b27083b1.png);
@@ -278,6 +298,11 @@
                     width: 25px;
                     height: 25px;
                 }
+                #search-keyboard:hover::before{
+                    filter: brightness(0.7);
+                }
+
+
             </style>
 
             <div id="search">
