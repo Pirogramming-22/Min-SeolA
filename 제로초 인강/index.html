@@ -208,41 +208,45 @@
 
             <style>
                 #search > form{
-                    display: inline-block;
+                    display: inline-flex;
                     width: 708px;
                     height: 60px;
                     border: 1px solid #03c75a;
                     border-radius: 33px;
                     text-align: left;
-                    vertical-align: middle;
-                    line-height: 60px;
+                    padding-left: 30px;
+                }
+                #search-svg{
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 68px;
+                    height: 100%;
+                    margin-right: 12px;
+                }
+                #search> form img{
+                    width: 70px;
                 }
                 #search-input{
-                    width: 430px;
+                    width: 480px;
                     padding: 17px 0px;
                     font-size: 1rem;
-                    line-height: 2px;
+                    line-height: 24px;
                     font-weight: bold;
                     border: none;
                     outline: none;
-                    margin-left: 30px;
-                }
-                #search-svg{
-                    display: inline-block;
-                    width: 68px;
-                    height: 100%;
-                    padding: 0px;
-                    vertical-align: middle;
-                    margin-right: 10px;
-                }
-                #search> form img{
-                    display: block;
-                    margin-top: 20px;
-                    margin-left: 30px;
-                    width: 70px;
+                    margin-left: 10px;
                 }
                 #search-right{
-                    display: inline-block;
+                    flex: 1;
+                    display: flex;
+                    align-items: stretch;
+                    justify-content: flex-end;
+                }
+                #search-keyboard, #search-recent, #search-button{
+                    background: transparent;
+                    border: none;
+                    cursor: pointer;
                 }
                 #search-keyboard::before{
                     content: "";
@@ -252,7 +256,7 @@
                     background-position: -148px -301px;
                     background-repeat: no-repeat;
                     width: 24px;
-                    height: 14px;
+                    height: 16px;
                 }
                 #search-recent::before{
                     content: "";
