@@ -85,7 +85,6 @@
         }
         #wrap-center{
             width: 1280px;
-            background-color: yellow;
             display: inline-block;
         }
         #main{
@@ -215,34 +214,86 @@
                     border: 1px solid #03c75a;
                     border-radius: 33px;
                     text-align: left;
+                    vertical-align: middle;
+                    line-height: 60px;
                 }
-                #search > form > input {
-                    width: 480px;
-                    height: 100%;
+                #search-input{
+                    width: 430px;
                     padding: 17px 0px;
+                    font-size: 1rem;
+                    line-height: 2px;
+                    font-weight: bold;
                     border: none;
                     outline: none;
+                    margin-left: 30px;
                 }
-                #search>form a{
+                #search-svg{
                     display: inline-block;
                     width: 68px;
                     height: 100%;
-                    padding: 19px;
-                    margin-right: 20px;
+                    padding: 0px;
+                    vertical-align: middle;
+                    margin-right: 10px;
                 }
                 #search> form img{
+                    display: block;
+                    margin-top: 20px;
+                    margin-left: 30px;
                     width: 70px;
+                }
+                #search-right{
+                    display: inline-block;
+                }
+                #search-keyboard::before{
+                    content: "";
+                    display: inline-block;
+                    background-image: url(https://pm.pstatic.net/resources/asset/sp_main.b27083b1.png);
+                    background-size: 463px 440px;
+                    background-position: -148px -301px;
+                    background-repeat: no-repeat;
+                    width: 24px;
+                    height: 14px;
+                }
+                #search-recent::before{
+                    content: "";
+                    display: inline-block;
+                    background-image: url(https://pm.pstatic.net/resources/asset/sp_main.b27083b1.png);
+                    background-size: 463px 440px;
+                    background-position: -221px -184px;
+                    background-repeat: no-repeat;
+                    width: 10px;
+                    height: 6px;
+                }
+                #search-button::before{
+                    content: "";
+                    display:inline-block;
+                    background-image: url(https://pm.pstatic.net/resources/asset/sp_main.b27083b1.png);
+                    background-size: 463px 440px;
+                    background-position: -405px -52px;
+                    background-repeat: no-repeat;
+                    width: 25px;
+                    height: 25px;
                 }
             </style>
 
             <div id="search">
                 <form action="">
-                    <a href="#">
+                    <a id="search-svg" href="#">
                         <img src="./searchlogo.png" alt="로고">
                     </a>
                     <label for="search-input" class="blind">검색어 입력</label>
-                    <input id="search-input" type="text">
-                    <button class="blind">검색</button>
+                    <input id="search-input" type="text" placeholder="검색어를 입력하세요.">
+                    <div id="search-right">
+                        <button href="#" id="search-keyboard">
+                            <span class="blind">입력도구</span>
+                        </button>
+                        <button href="#" id="search-recent">
+                            <span class="blind">자동완성/최근검색어펼치기</span>
+                        </button>
+                        <button id="search-button">
+                            <div><span class="blind">검색</span></div>
+                        </button>
+                    </div>
                 </form>
             </div>
             <div id="nav"></div>
