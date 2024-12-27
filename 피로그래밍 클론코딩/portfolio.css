@@ -17,19 +17,20 @@ a{
 }
 
 header{
-    padding: 0px 40px;
+    padding: 0 40px;
     display: flex;
     position: sticky;
     top: 0px;
-    padding: 20px 20px;
+    padding: 20px 20px;;
     z-index: 1000;
-    background-color: black;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0) 100%);
 }
 
 main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 40px; 
+    margin-bottom: 40px;
 }
 
 
@@ -40,11 +41,15 @@ body{
 #header-left img{
     width: 40px;
     height: 40px;
+    margin-left: 60px;
+    margin-top: 5px;
 }
 
 #header-right {
     margin-left: auto;
     display: flex;
+    margin-right: 60px;
+    margin-top: 5px;
 }
 
 #header-right ul{
@@ -54,11 +59,10 @@ body{
 
 #header-right li{
     position: relative;
-    padding: 5px;
+    padding: 15px;
     font-size: 18px;
     font-weight: 700;
 }
-
 #header-right li:nth-child(3){
     color: var(--green-1);
 }
@@ -74,16 +78,23 @@ body{
 #main-top{
     margin-bottom: 16px;
     width: 100%;
+    position: relative;
+    text-align: center;
+    align-items: baseline;
 }
 
-#main-top :first-child{
+#main-top div{
     text-align: center;
     font-size: 22px;
+    margin-bottom: 3px;
 }
 
-#main-top :last-child{
-    text-align: right;
+#main-top span{
+    position: absolute;
+    top: 6px;
+    right: 20px;
     font-size: 16px;
+    
 }
 
 .project{
@@ -128,7 +139,8 @@ body{
 
 .title{
     font-size: 22px;
-    margin-bottom: 5px;
+    font-weight: 600;
+    margin-bottom: 8px;
 }
 
 .text{

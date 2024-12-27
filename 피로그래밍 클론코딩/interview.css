@@ -17,13 +17,13 @@ a{
 }
 
 header{
-    padding: 20px 20px;
+    padding: 0 40px;
     display: flex;
     position: sticky;
     top: 0px;
     padding: 20px 20px;;
     z-index: 1000;
-    background-color: black;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0) 100%);
 }
 
 main {
@@ -41,11 +41,15 @@ body{
 #header-left img{
     width: 40px;
     height: 40px;
+    margin-left: 60px;
+    margin-top: 5px;
 }
 
 #header-right {
     margin-left: auto;
     display: flex;
+    margin-right: 60px;
+    margin-top: 5px;
 }
 
 #header-right ul{
@@ -55,7 +59,7 @@ body{
 
 #header-right li{
     position: relative;
-    padding: 5px;
+    padding: 15px;
     font-size: 18px;
     font-weight: 700;
 }
@@ -92,27 +96,33 @@ body{
 #main-top{
     margin-bottom: 16px;
     width: 100%;
+    position: relative;
+    text-align: center;
+    align-items: baseline;
 }
 
-#main-top :first-child{
+#main-top div{
     text-align: center;
     font-size: 22px;
+    margin-bottom: 3px;
 }
 
-#main-top :last-child{
-    text-align: right;
+#main-top span{
+    position: absolute;
+    top: 6px;
+    right: 20px;
     font-size: 16px;
+    
 }
 
 #main-body{
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 30px;
+    gap: 15px;
 }
 
 
 .member{
-    margin-top: 15px;
     font-size: 14px;
     display: flex;
     flex-direction: row;
@@ -169,13 +179,14 @@ body{
 
 .text{
     font-size:var(--body1);
+    color: white;
     display: block;
     position: absolute;
     font-size: 16px;
     color: var(--subtext-gray);
     margin-bottom: 30px;
     top: 100px;
-    font-weight: normal;
+    font-weight: 600;
 }
 
 
