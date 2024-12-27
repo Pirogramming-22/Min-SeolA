@@ -1,0 +1,324 @@
+@import "variable.css";
+@import "reset.css";
+body{
+    font-family: "Nexon", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    width: 100%;
+    background-color: black;
+    box-sizing: border-box;
+    color: white;
+}
+
+header,footer{
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+
+header{
+    padding: 20px 20px;
+    display: flex;
+    position: sticky;
+    top: 0px;
+    padding: 20px 20px;;
+    z-index: 1000;
+    background-color: black;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px; 
+    margin-bottom: 40px;
+}
+
+
+body{
+    margin:0 auto;
+}
+
+#header-left img{
+    width: 40px;
+    height: 40px;
+}
+
+#header-right {
+    margin-left: auto;
+    display: flex;
+}
+
+#header-right ul{
+    list-style: none;
+    
+}
+
+#header-right li{
+    position: relative;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#header-right li:nth-child(4){
+    color: var(--green-1);
+}
+
+#header-right li a:hover{
+    position: relative;
+    top: -2px;
+}
+#header-hamburger{
+    display: none;
+}
+
+#header-hamburger div{
+    background-color: white;
+    margin: 6px 0px;
+}
+#header-hamburger :nth-child(1){
+    width: 15px;
+    height: 3px;
+}
+#header-hamburger :nth-child(2){
+    width: 30px;
+    height: 3px;
+}
+
+#header-hamburger :nth-child(3){
+    width: 22.5px;
+    height: 3px;
+}
+#main-top{
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#main-top :first-child{
+    text-align: center;
+    font-size: 22px;
+}
+
+#main-top :last-child{
+    text-align: right;
+    font-size: 16px;
+}
+
+#main-body{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 30px;
+}
+
+
+.member{
+    margin-top: 15px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    position: relative;
+    border-radius: 10px;
+    background-color: var(--bg-gray);   
+    padding: 16px;
+    cursor: pointer;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+
+.main-image-container{
+    margin-right: 16px;
+    width: 70px;
+    height: 70px;
+    overflow: hidden ;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+}
+
+
+.main-image-container img{
+    width: 75px;
+    height: 75px;
+}
+
+.main-hamburger{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.main-hamburger div{
+    background-color: var(--bg-5);
+    margin: 5px 0px;
+    width: 20px;
+    height: 2px;
+}
+
+.name{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.text{
+    font-size:var(--body1);
+    display: block;
+    position: absolute;
+    font-size: 16px;
+    color: var(--subtext-gray);
+    margin-bottom: 30px;
+    top: 100px;
+    font-weight: normal;
+}
+
+
+.member-content{
+    margin: 10px;
+}
+
+.major, .non-major, .double-major{
+    border-radius: 5px;
+    padding: 6px 8px;
+    display: inline-block;
+}
+
+.major{
+    background-color: var(--blue);
+}
+
+.non-major{
+    background-color: var(--red);
+}
+
+.double-major{
+    background-color: var(--badge-green);
+}
+
+.member:hover {
+    position: relative;
+    top: -2px;
+}
+
+.member:hover .main-hamburger div {
+    transition: 0.3s;
+}
+
+.member:hover .main-hamburger div:nth-child(1) {
+    width: 15px;
+    height: 3px;
+}
+
+.member:hover .main-hamburger div:nth-child(2) {
+    width: 30px;
+    height: 3px;
+}
+
+.member:hover .main-hamburger div:nth-child(3) {
+    margin-left: 15px;
+    width: 15px;
+    height: 3px;
+}
+
+.member:hover .member-image{
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1.05);
+}
+
+
+footer{
+    padding: var(--offset);
+    width: 100vw;
+    background-color: var(--bg-gray);
+    color: white;
+}
+
+.emoji {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: black;
+    position: relative;
+}
+
+#footer-rules{
+    background-color: transparent;
+    font-size:14px;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+#footer-sns{
+    background-color: transparent;
+    margin-bottom: 20px;
+}
+
+#footer-nav{
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#footer-nav ul{
+    background-color: transparent;
+    display: flex;
+}
+
+#footer-nav li{
+    padding: 20px;
+}
+
+#email{
+    display: flex;
+}
+
+#mail-img{
+    margin-right: 10px;
+}
+
+#footer-sns a:hover img,
+#footer-rules:hover,
+#email:hover,
+#footer-nav li a:hover {
+    position: relative;
+    top: -2px;
+}
+
+#footer-nav li{
+    padding: 20px;
+}
+
+
+@media (max-width:800px){
+    #header-hamburger{
+        display: block;
+        margin-left: auto;
+    }
+    #header-right{
+        display: none;
+        background-color: var(--bg-5);
+    }
+    #main-body{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 30px;
+    }
+}
+
+
+@media (max-width : 650px){
+    #main-body{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    main{
+        padding: 0 20px;
+    }
+}
