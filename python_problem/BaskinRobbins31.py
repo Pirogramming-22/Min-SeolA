@@ -1,5 +1,11 @@
 num=0
 player="playerA"
+def switchPlayer():
+    global player
+    if (player=="playerA"):
+        return ("playerB")
+    else:
+        return("playerA")
 
 while True:
     try:
@@ -11,5 +17,6 @@ while True:
         print("정수를 입력하세요.\n")
     
     for i in range(addNum):
-        print(num+1+i)
+        print(player,":",num+1+i)
     num+=addNum
+    player=switchPlayer()
