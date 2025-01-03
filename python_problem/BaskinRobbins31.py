@@ -1,4 +1,5 @@
 num=0
+player="playerA"
 
 while True:
     try:
@@ -8,3 +9,7 @@ while True:
             continue
     except Exception:
         print("정수를 입력하세요.\n")
+    
+    for i in range(addNum):
+        print(num+1+i)
+    num+=addNum
