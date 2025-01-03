@@ -27,5 +27,5 @@ while True:
         player=switchPlayer()
         gameResult(player)
         break
-    player=switchPlayer()
+    player=switchPlayer() 
     
