@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 리스트</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .header-container {
+            background-color: rgb(225, 25, 25);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px; 
+            border: 1px solid rgba(128, 128, 128, 0.5);
+            padding: 10px 50px; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 1000; 
+        }
+
+        .header-container button {
+            border: none;
+        }
+
+        #header-title {
+            background-color: transparent;
+            color: #FCF6F5;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        #btn-write {
+            background-color: #F1B840;
+            color: #f3f0d7;
+            padding: 15px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-right: 80px;
+        }
+
+        .main-container {
+            background-color: #000000f0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            grid-template-rows: repeat(auto-fill, 130px);
+            gap: 15px; 
+            padding: 30px;
+            box-sizing: border-box;
+            margin-top: 60px; 
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+        }
+
+        .list-item {
+            background-color: antiquewhite;
+            padding: 20px;
+            border-radius: 8px;
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            height: 90px;
+            max-height: 120px;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .list-item-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            white-space: nowrap; 
+            max-width: 100%; 
+            margin: 3px;
+        }
+
+        .list-item-release, .list-item-rate, .list-item-genre {
+            font-size: 0.9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%; 
+            margin: 3px;
+            flex-grow: 1;  
+            text-align: center;
+        }
+
+        .list-item-info{
+            display: flex;
+            height: 30px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+            color: darkgray;
+        }
+        
+        a{
+            text-decoration: none;
+            color: black;
+        }
+
+        a:visited{
+            color: black;
+        }
+        .div-line{
+            color: darkgray;
+            margin: 0 10px;
+        }
+        .empty-message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <a href="{% url 'board:board_list' %}">
+            <button class="btn list-btn" id="header-title">my <span style="color: #f1a400;">Movie</span> Reviews</button>
+        </a>
+        <a href="{% url 'board:board_create' %}">
+            <button class="btn btn-custom" id="btn-write">글쓰기</button>
+        </a>
+    </div>
+    <div class="main-container">
+        {% for board in boards %}
+            <a href="{%url 'board:board_detail' board.pk %}">
+                <div class="list-item">
+                    <div></div>
+                    <div class="list-item-title">{{ board.title }}</div>
+                    <hr style="margin: 2px;">
+                    <hr>
+                    <div class="list-item-info">
+                        <div class="list-item-release">{{ board.release }}</div>
+                        <div class="div-line">|</div>
+                        <div class="list-item-rate">{{ board.rate }}</div>
+                        <div class="div-line">|</div>
+                        <div class="list-item-genre">{{ board.genre }}</div>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <div class="empty-message">
+                <p>리뷰를 작성해보세요!</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

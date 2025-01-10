@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 홈</title>
+    <style>
+        body{
+            background-color: #000000f0;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+        }
+
+        button{
+            background-color: #f3f0d7;
+            color: #02343F;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 15px 25px;
+            margin: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover{
+            scale: 1.05;
+            transition: all 0.3s ease;
+        }
+        .welcome-text{
+            color: #F0EDCC;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .text{
+            color: #F0EDCC;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+        #create-btn{
+            color: rgb(225, 25, 25);
+        }
+        #list-btn{
+            color: #f1a400;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="welcome-text">My Movie Reviews</div>
+        <div class="text">
+            "Write and cherish your own reviews with us!
+        </div>
+        <div class="button-container">
+            <a href="{% url 'board:board_create' %}">
+                <button id="create-btn">Write a Review ✍🏻</button>
+            </a>
+            <a href="{% url 'board:board_list' %}">
+                <button id="list-btn">Review List 💌</button>
+            </a>
+        </div>
+    </div>
+    
+</body>
+</html>

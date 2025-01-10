@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 작성</title>
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .header-container {
+            background-color: rgb(225, 25, 25);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px; 
+            border: 1px solid rgba(128, 128, 128, 0.5);
+            padding: 10px 50px; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 1000; 
+        }
+
+        .header-container button {
+            border: none;
+        }
+
+        #header-title {
+            background-color: transparent;
+            color: #FCF6F5;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        #btn-write {
+            background-color: #F1B840;
+            color: #f3f0d7;
+            padding: 15px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-right: 80px;
+        }
+
+        .main-container {
+            background-color: #000000f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px); 
+            padding: 30px;
+            box-sizing: border-box;
+            margin-top: 60px;
+        }
+
+        .main-box {
+            background-color: white;
+            padding: 50px 50px 30px 50px;
+            border-radius: 15px;
+            width: 500px;
+            max-width: 800px;
+        }
+
+        #main-title {
+            text-align: center;
+            color: #000000f0;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        hr {
+            margin: 20px;
+        }
+
+        form div {
+            margin: 10px;
+        }
+
+        form input, select {
+            padding: 4px;
+        }
+
+        textarea {
+            padding: 15px;
+            width: 100%;
+            height: 70px;
+        }
+
+        input[type="radio"] {
+            appearance: none;
+            margin-right: 10px;
+        }
+
+        input[type="radio"]:checked::before {
+            content: '✔';
+            color: #F1B840;
+        }
+
+        .btn-submit {
+            border: 2px solid #02343F;
+            color: #02343F;
+            background-color: transparent;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-left: 75%;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            scale: 1.03;
+            transition: all 0.3s ease;
+        }
+
+        #age-container {
+            display: flex;
+            justify-content: space-between; 
+            margin-top: 10px;
+        }
+
+        #age-container div {
+            display: inline-block; 
+            margin-right: 5px; 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <a href="{% url 'board:board_list' %}">
+            <button class="btn list-btn" id="header-title">my <span style="color: #f1a400;">Movie</span> Reviews</button>
+        </a>
+        <a href="{% url 'board:board_create' %}">
+            <button class="btn btn-custom" id="btn-write">글쓰기</button>
+        </a>
+    </div>
+
+    <div class="main-container">
+        <div class="main-box">
+ <div id="main-title">Movie review 🍿</div>
+        <hr>
+        <form action="{% url 'board:board_create' %}"  method="post">
+            {% csrf_token %}
+            <div id="title-container">
+                <label for="title">제목 : </label>
+                <input type="text" id="title-text" name="title">
+            </div>
+
+            <div id="release-container">
+                <label for="release">개봉년도 : </label>
+                <input type="text" id="release-text" name="release">
+            </div>
+
+            <div id="genre-container">
+                <label for="genre">장르 : </label>
+                <select name="genre" id="genre">
+                    {% for value, display in genre_choices %}
+                        <option value="{{ value }}">{{ display }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="age-container">
+                <label for="age" style="margin-top: 10px;">연령 제한</label>
+                {% for value, display in age_choices %}
+                    <div>
+                        <input type="radio" name="age" value="{{ value }}" id="{{ value }}" {% if value == 'G' %}checked{% endif %}>
+                        <label for="{{ value }}">{{ display }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            
+
+            <div id="rate-container">
+                <label for="rate">별점 : </label>
+                <input type="text" id="rate-text" name="rate">
+            </div>
+
+            <div id="runningtime-container">
+                <label for="runningtime">러닝타임 : </label>
+                <input type="text" id="runningtime-text" name="runningtime">
+            </div>
+
+            <div id="review-container">
+                <div style="margin: 0px 0px 5px 0px;">리뷰 :</div>
+                <textarea name="review" id="review"></textarea>
+            </div>
+
+            <div id="director-container">
+                <label for="director">감독 : </label>
+                <input type="text" id="director-text" name="director">
+            </div>
+
+            <div id="actor-container">
+                <label for="actor">배우 : </label>
+                <input type="text" id="actor-text" name="actor">
+            </div>
+            <button type="submit" class="btn btn-submit">작성 완료</button>
+        </form>
+
+    </div>
+        </div>
+       
+    
+</body>
+</html>
+
