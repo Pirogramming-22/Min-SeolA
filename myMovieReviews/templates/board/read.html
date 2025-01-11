@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 상세</title>
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .header-container {
+            background-color: rgb(225, 25, 25);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px; 
+            border: 1px solid rgba(128, 128, 128, 0.5);
+            padding: 10px 50px; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 1000; 
+        }
+
+        .header-container button {
+            border: none;
+        }
+
+        #header-title {
+            background-color: transparent;
+            color: #FCF6F5;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        #btn-write {
+            background-color: #F1B840;
+            color: #f3f0d7;
+            padding: 15px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-right: 80px;
+        }
+
+        .main-container {
+            background-color: #000000f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px);
+            padding: 30px;
+            box-sizing: border-box;
+            margin-top: 60px;
+        }
+
+        .list-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-item div {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn, .list-btn {
+            background-color: #f1a400;
+            color: white;
+            border: none;
+            margin: 0px 5px;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+
+        .list-item-title{
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .list-info, .list-make{
+            display: flex;
+            color: gray;
+            justify-content: center;
+        }
+        .list-info div, .list-make div{
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <a href="{% url 'board:board_list' %}">
+            <button class="btn list-btn" id="header-title">my <span style="color: #f1a400;">Movie</span> Reviews</button>
+        </a>
+        <a href="{% url 'board:board_create' %}">
+            <button class="btn btn-custom" id="btn-write">글쓰기</button>
+        </a>
+    </div>
+    
+    <div class="main-container">
+        <div class="list-item-title">{{ board.title }}</div>
+        <div class="list-item">
+            <div class="list-info">
+                <div class="list-item-age">{{ board.age_display }}</div>
+                <div>|</div>
+                <div class="list-item-release">{{ board.release }}</div>
+                <div>|</div>
+                <div class="list-item-runningtime">{{ board.runningtime }}</div>
+                <div>|</div>
+                <div class="list-item-genre">{{ board.genre }}</div>
+            </div>
+
+            <div class="list-make">
+                <div class="list-item-director">{{ board.director }}</div>
+                <div>||</div>
+            <div class="list-item-actor">{{ board.actor }}</div>
+            </div>
+            
+            <div class="list-item-rate">{{ board.rate }} 점</div>
+            <div class="list-item-review">{{ board.review }}</div>
+        </div>
+
+        <div class="btn-container">
+            <a href="{% url 'board:board_update' board.pk %}">
+                <button class="btn edit-btn">게시물 수정</button>
+            </a>
+            <a href="{% url 'board:board_list' %}">
+                <button class="btn list-btn">리스트로 돌아가기</button>
+            </a>
+            <form action="{% url 'board:board_delete' board.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn delete-btn">게시물 삭제</button>
+            </form>
+        </div>
+        
+    </div>
+</body>
+</html>
