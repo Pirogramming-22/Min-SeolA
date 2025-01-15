@@ -1,0 +1,321 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea List</title>
+    {% block head %}
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <style>
+        .container {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 30px auto;
+    width: 90%;
+    max-width: 1200px; 
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.title {
+    color: lightgreen;
+    font-weight: bold;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    word-wrap: break-word; 
+    line-height: 1.2;
+}
+
+.detail {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.list-item-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    width: 250px; 
+    justify-content: space-between;
+    padding: 15px;
+    box-sizing: border-box;
+    background-color: lightblue;
+    border-radius: 8px;
+    position: relative;
+    transition: transform 0.3s ease; 
+}
+
+.list-item:hover {
+    transform: scale(1.02); 
+}
+
+.idea-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.star-icon {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: gold;
+    font-size: 30px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.star-icon.starred {
+    color: gold;
+}
+
+.star-icon:hover {
+    color: orange;
+}
+
+.idea-name {
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 3px 0;
+    width: 140px;
+    margin-left: -10px;
+    line-height: 1.3;
+}
+
+.devtool, .idea-kind {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    line-height: 1.4;
+}
+
+hr {
+    border: 3px solid lightpink;
+    width: 100%;
+    margin: 15px 0;
+}
+
+.interest {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    justify-content: center;
+}
+
+.interest-btn {
+    padding: 5px 10px;
+    background-color: lightgreen;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.interest-btn:hover {
+    background-color: darkgreen;
+}
+
+.empty-message {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+.list-sort-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.list-sort-container select {
+    position: absolute;
+    top: 230px;
+    left: 1200px;
+    width: 150px;
+    height: 35px;
+    font-size: 1rem;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: lightgray;
+}
+
+.paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: -50px;
+}
+
+.paginator a {
+    padding: 5px 10px;
+    color: black;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.paginator a.current_page {
+    border: 1px solid white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+    </style>
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <div class="title">Idea List</div>
+        <div class="detail">나의 아이디어를 잊지 말고 기록해보세요.</div>
+        <div class="list-sort-container">
+            <form id="list-sort" method="get" action="">
+                <select name="sort" onchange="this.form.submit();">
+                    <option value="" disabled selected>--정렬기준--</option>
+                    <option value="-star" {% if request.GET.sort == "-star" %}selected{% endif %}>찜하기순</option>
+                    <option value="id" {% if request.GET.sort == "id" %}selected{% endif %}>등록순</option>
+                    <option value="-id" {% if request.GET.sort == "-id" %}selected{% endif %}>최신순</option>
+                    <option value="title" {% if request.GET.sort == "title" %}selected{% endif %}>이름순</option>
+                </select>
+            </form>
+        </div>
+        <div class="list-item-container">
+            {% for idea in ideas %}
+                <div class="list-item">
+                    <div class="idea-image">
+                        {% if idea.image %}
+                            <img src="{{ idea.image.url }}" alt="Idea Image">
+                        {% else %}
+                            <p>이미지가 없습니다</p>
+                        {% endif %}
+                        <button class="star-icon {% if idea.star %}starred{% endif %}" onclick="startoggle(this, {{ idea.id }})">
+                            {% if idea.star %}★{% else %}☆{% endif %}
+                        </button>
+                    </div>
+                    
+                    <a href="{% url 'idealist:detail' idea.pk %}">
+                        <div class="idea-name">{{ idea.title }}</div>
+                    </a>
+                    <hr>
+                    <div class="devtool"><p>예상 개발 툴 :</p>{{ idea.devtool }}</div>
+                    <div class="idea-kind">
+                        <p>아이디어 관심도 :</p>
+                        <div class="interest">
+                            <button class="interest-btn" data-id="{{ idea.pk }}" data-action="decrease">-</button>
+                            <span id="interest-{{ idea.pk }}">{{ idea.interest }}</span>
+                            <button class="interest-btn" data-id="{{ idea.pk }}" data-action="increase">+</button>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-message">
+                    <p>아이디어를 등록해 보세요!</p>
+                </div>
+            {% endfor %}
+        </div>
+        
+        
+        <div class="paginator">
+            {% if ideas.has_previous %}
+                <a href="?page={{ ideas.previous_page_number }}&sort={{ sort_value }}"></a>
+            {% else %}
+                <a></a>
+            {% endif %}
+        
+            {% for p in ideas.paginator.page_range %}
+                <a href="?page={{ p }}&sort={{ sort_value }}" class="mx-1 {% if ideas.number == p %}current_page{% endif %}">{{ p }}</a>
+            {% endfor %}
+        
+            {% if ideas.has_next %}
+                <a href="?page={{ ideas.next_page_number }}&sort={{ sort_value }}">></a>
+            {% else %}
+                <a>></a>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+    
+    {% block extra_js %}
+    <script>
+        function getCsrfToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM fully loaded and parsed');
+            const buttons = document.querySelectorAll('.interest-btn');
+            buttons.forEach(button => {
+                console.log(`Button initialized with data-id=${button.dataset.id}, action=${button.dataset.action}`);
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const ideaId = this.dataset.id;
+                    const action = this.dataset.action;
+                    updateInterest(ideaId, action);
+                });
+            });
+        });
+
+
+        function updateInterest(ideaId, action) {
+            fetch(`/idealist/update_interest/${ideaId}/${action}/`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);  
+                    if (data.success) {
+                        const interestElement = document.querySelector(`#interest-${ideaId}`);
+                        if (interestElement) {
+                            interestElement.textContent = data.new_interest;
+                        }
+                    }
+                });
+        }
+
+        function startoggle(button, ideaId) {
+            fetch(`/idealist/startoggle/${ideaId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCsrfToken(), 
+                    'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.star !== undefined) {
+            button.textContent = data.star ? '★' : '☆'; 
+            button.classList.toggle('starred', data.star); 
+        } else {
+            console.error('Error toggling star:', data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
+    </script>
+    {% endblock %}
+</body>
+</html>

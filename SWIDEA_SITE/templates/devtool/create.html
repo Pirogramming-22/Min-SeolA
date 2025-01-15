@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% block head %}
+    <style>
+        .container{
+            color: white;
+            background-color: rgba(255, 255, 255, 0.4); 
+            display: flex;
+            flex-direction: column;
+            justify-content: top;
+            align-items: center;
+            margin: 50px auto;
+            height: 70vh;
+            width: 80%;
+            border-radius: 5px;
+        }
+        .container div, label, form {
+            background-color: transparent;
+        }
+
+        input, textarea{
+            background-color: white;
+            margin: 10px 0px;
+            padding: 0 5px;
+        }
+        input{
+            height: 25px;
+            border-radius: 5px;
+            padding: 0 5px;
+        }
+        .title{
+            color: lightgreen;
+            font-weight: bold;
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 5px;
+        }
+        .detail{
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+        }
+        .btn{
+            display: block;
+            margin: 0px auto;
+            border-radius: 30px;
+            background-color: transparent;
+            padding: 10px;
+        }
+    </style>
+    {% endblock %}
+
+</head>
+<body>
+    {% block content%}
+    <div class="container">
+        <div class="title">DevTool Register</div>
+        <div class="detail">개발툴 등록 페이지입니다. 자신이 다룰 수 있는 개발 툴을 등록해 보세요.</div>
+        <form action="{% url 'devtool:create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-field">
+                <label for="id_name">이름<br></label>
+                {{ form.name }}
+            </div>
+            <div class="form-field">
+                <label for="id_kind">종류<br></label>
+                {{ form.kind }}
+            </div>
+            <div class="form-field">
+                <label for="id_content">개발 툴 설명<br></label>
+                {{ form.content }}
+            </div>
+            <div class="form-field">
+                <button class="btn">SUBMIT</button>
+            </div>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{%static 'basecss.css'%}">
+    {% block head%}
+
+    {% endblock %}
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="{% url 'idealist:list' %}" class="btn list-button" style="background-color: transparent; color: white;">
+                My <span>SW Idea</span>Manage</div>
+            </a>
+        <div class="nav-right">
+            <div><a href="{% url 'idealist:create' %}">아이디어 등록</a></div>
+            <div><a href="{% url 'idealist:list' %}">아이디어 관리</a></div>
+            <div><a href="{% url 'devtool:create' %}">개발 툴 등록</a></div>
+            <div><a href="{% url 'devtool:list' %}">개발 툴 관리</a></div>
+        </div>
+    </nav>
+    
+    <div class="content">
+        {% block content%}
+        {% endblock %}
+
+        {% block extra_js %}
+        {% endblock %}
+    </div>
+</body>
+</html>
