@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea Update</title>
+    {% block head %}
+    <style>
+        .container{
+            color: white;
+            background-color: rgba(255, 255, 255, 0.4); 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 50px auto;
+            height: auto;
+            width: 80%;
+            border-radius: 5px;
+            padding: 20px;
+        }
+        .title{
+            color: lightgreen;
+            font-weight: bold;
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 5px;
+        }
+        .detail{
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .btn{
+            display: block;
+            margin: 20px auto 0 auto;
+            border-radius: 30px;
+            background-color: transparent;
+            padding: 10px;
+            width: 80px;
+        }
+        
+        input:not([type="file"]), textarea {
+            background-color: white;
+            margin: 10px 0px;
+            padding: 0 5px;
+        }
+
+        input:not([type="file"]) {
+            height: 25px;
+            border-radius: 5px;
+        }
+
+        input[type="file"]{
+            margin: 5px 0px;
+        }
+        
+    </style>
+    {% endblock %}
+
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <div class="title">Idea Detail Update</div>
+        <div class="detail">아이디어 세부내용 수정 페이지입니다. 아이디어를 구체화하거나 내용을 변경해 보세요.</div>
+        <form action="{% url 'idealist:update' idea.pk %}"
+              method="post"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-field">
+                <label for="id_title">아이디어명<br></label>
+                {{ form.title }}
+            </div>
+            <div class="form-field">
+                <label for="id_image">이미지<br></label>
+                {{ form.image }}
+            </div>
+            <div class="form-field">
+                <label for="id_content">아이디어 설명<br></label>
+                {{ form.content }}
+            </div>
+            <div class="form-field">
+                <label for="id_interest">아이디어 관심도<br></label>
+                {{ form.interest }}
+            </div>
+            <div class="form-field">
+                <label for="id_devtool">개발툴<br></label>
+                {{ form.devtool }}
+            </div>
+            <div class="form-field">
+                <button class="btn">UPDATE</button>
+            </div>
+        </form>
+    </div>
+    {% endblock %}
+    
+    {% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log("JavaScript is loaded"); 
+
+            const buttons = document.querySelectorAll('.interest-btn');
+            console.log(`Found ${buttons.length} buttons`); 
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); 
+                    const ideaId = this.dataset.id;
+                    const action = this.dataset.action;
+                    console.log(`Button clicked for idea ID: ${ideaId}, Action: ${action}`); 
+                    updateInterest(ideaId, action);
+                });
+            });
+        });
+
+        function updateInterest(ideaId, action) {
+            fetch(`/idealist/update_interest/${ideaId}/${action}/`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);  
+                    if (data.success) {
+                        const interestElement = document.querySelector(`#interest-${ideaId}`);
+                        if (interestElement) {
+                            interestElement.textContent = data.new_interest;
+                        }
+                    }
+                });
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>

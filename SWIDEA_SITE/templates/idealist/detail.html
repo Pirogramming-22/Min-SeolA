@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    .container {
+        color: white;
+        background-color: rgba(255, 255, 255, 0.4); 
+        display: flex;
+        flex-direction: column;
+        justify-content: top;
+        align-items: center;
+        margin: 50px auto;
+        height: 76vh;
+        width: 80%;
+        border-radius: 5px;
+    }
+    .title {
+        color: lightgreen;
+        font-weight: bold;
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 5px;
+    }
+    .detail {
+        text-align: center;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+    img {
+        width: 250px; 
+        max-height: 400px;
+        height: auto; 
+        object-fit: contain;
+        margin: 0 100px 0 80px;
+    }
+    .box {
+        border: 1px solid white;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 90%;
+        padding: 20px 0;
+        box-sizing: border-box; 
+        margin: 20px;
+    }
+    .button-container{
+        margin-top: 20px;
+    }
+    .btn{
+        border-radius: 5px;
+        background-color: aqua;
+        padding: 10px 15px;
+        font-weight: bold;
+    }
+    .delete-button{
+        color: white;
+        background-color: rgb(224, 63, 63);
+    }
+    .list-button{
+        color: black;
+        background-color: lightgray;
+    }
+    .edit-button{
+        color: white;
+        background-color: rgb(92, 148, 220);
+    }
+    .devtool{
+        color: white;
+        text-shadow: 1px 1px lightgreen;
+    }
+    .idealist-title{
+        font-size: 2rem;
+        text-shadow: 1px 1px lightgreen;
+        margin-bottom: 30px;
+    }
+    .second-title{
+        margin-bottom: 5px;
+    }
+    .star-btn{
+        color: gold;
+        font-size: 30px;
+        font-weight: bold;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    .devtool{
+        color: white;
+        text-shadow: 1px 1px lightgreen;
+        text-decoration: none; 
+    }
+    .devtool:hover {
+        text-decoration: underline; 
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="title">Idea Detail</div>
+    <div class="detail">아이디어 세부내용 페이지입니다. 당신의 아이디어를 자세히 살펴보세요.</div>
+    <div class="box">
+        {% if idea.image %}
+            <img src="{{ idea.image.url }}" alt="이미지" />
+        {% endif %}
+        <div class="text">
+            <div class="idealist-title">{{ idea.title }}
+                <button 
+                    class="star-btn" 
+                    onclick="startoggle(this, {{ idea.id }})">
+                    {% if idea.star %}
+                        ★
+                    {% else %}
+                        ☆
+                    {% endif %}
+                </button>
+            </div>
+            <div class="second-title">1. 아이디어 관심도</div>
+            <div>{{ idea.interest }}</div>
+            <br>
+            <div class="second-title">2. 예상 개발 툴</div>
+            <a href="{% if idea.devtool %}{% url 'idealist:devtool_detail' idea.devtool.id %}{% else %}#{% endif %}" class="devtool">
+                {{ idea.devtool }}
+            </a>
+            <br>
+            <div class="second-title">3. 아이디어 설명</div>
+            <div>{{ idea.content }}</div>
+        </div>
+    </div>
+    <div class="button-container">
+        <a href="{% url 'idealist:delete' idea.pk%}" class="btn delete-button">삭제</a>
+        <a href="{% url 'idealist:list' %}" class="btn list-button">목록</a>
+        <a href="{% url 'idealist:update' idea.pk %}" class="btn edit-button">수정</a>
+    </div>
+</div>
+
+<meta name="csrf-token" content="{{ csrf_token }}">
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function getCsrfToken() {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    if (csrfToken) {
+        return csrfToken;
+    } else {
+        console.error('CSRF token not found!');
+        return null;
+    }
+}
+
+function startoggle(button, ideaId) {
+    const csrfToken = getCsrfToken();
+    if (!csrfToken) {
+        console.error('CSRF token is missing');
+        return;
+    }
+
+    fetch(`/idealist/startoggle/${ideaId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.star !== undefined) {
+            button.textContent = data.star ? '★' : '☆';
+            button.classList.toggle('starred', data.star);
+        } else {
+            console.error('Error toggling star:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
+{% endblock %}
