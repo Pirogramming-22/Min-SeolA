@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="title">𝑃𝑖𝑟𝑜𝑠𝑡𝑎𝑔𝑟𝑎𝑚</div>
+        <div class="second-title">Sign Up</div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="userid", id="userid", placeholder="사용자 이름" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="password" placeholder="비밀번호" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="name" id="name" placeholder="사용자 이름" required>
+            </div>
+            {% if messages %}
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <button type="submit">회원가입</button>
+        </form>
+
+        <div class="text-for-signup">
+            <div id="already-exist">이미 계정이 있으신가요?</div>
+            <a href="{% url 'pirostagram:login' %}">로그인</a>
+        </div>
+    </div>
+</body>
+</html>
