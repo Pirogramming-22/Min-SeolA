@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/upload.css' %}">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <title>새 게시물</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="header__goBackButton">
+                <img src="{% static 'assets/icons/goBack.svg' %}" alt="뒤로 가기 버튼" />
+            </button>
+            <div class="header__text">새 게시물</div>
+            <div></div>
+        </div>
+        <form action="{% url 'pirostagram:create_post' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="main">
+                <div class="form-field content">
+                    <div class="content-img">
+                        <input type="file" name="images" id="file-input" accept="image/*" multiple>
+                    
+                        <div id="img-preview-container">
+                            <label for="file-input" id="add_img_label">+</label>
+                        </div>
+                    </div>            
+                    <div class="content-text">
+                        <textarea name="content" id="content" placeholder="문구 추가..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-field submit_container">
+                <button class="submit_btn">공유</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("file-input").addEventListener("change", function(event) {
+            var files = event.target.files;
+            var imgPreviewContainer = document.getElementById("img-preview-container");
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.style.maxHeight = "200px";
+                    img.style.width = "auto";
+
+                    imgPreviewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

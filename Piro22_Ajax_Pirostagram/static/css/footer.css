@@ -1,0 +1,16 @@
+footer{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+}
+
+.navBar{
+    color: white;
+    padding: var(--padding);
+    font-weight: bold;
+}
+
+.navBar img{
+    width: 24px ;
+    height: 24px ;
+    border-radius: 50%;
+}

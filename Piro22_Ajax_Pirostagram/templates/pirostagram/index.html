@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+< lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/userInfo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/highlights.css' %}">
+    <link rel="stylesheet" href="{% static 'css/posts.css' %}">
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <button class="header__goBackButton">
+          <img src="{% static 'assets/icons/goBack.svg' %}" alt="뒤로 가기 버튼" />
+        </button>
+        <div class="header__username">{{ user.userid }}</div>
+        <div class="header__rightButtons">
+          <button class="header__alarmButton">
+            <img src="{% static 'assets/icons/alarm.svg' %}" alt="알림 열기 버튼" />
+          </button>
+          <button class="header__moreButton">
+            <img src="{% static 'assets/icons/more.svg' %}" alt="더보기 열기 버튼" />
+          </button>
+        </div>
+      </header>
+      <main>
+        <section class="profile">
+          <div class="profile__image">
+            <img src="{% static 'assets/images/profilePicture.jpg' %}" alt="프로필 이미지">
+          </div>
+          <div class="profile__data">
+            <div class="profile__data-item">
+              <div class="profile__data-number">{{ posts.count }}</div>
+              <div class="profile__data-type">Posts</div>
+            </div>
+            <div class="profile__data-item">
+              <div class="profile__data-number" id="followers_count">{{ followers_count }}</div>
+              <div class="profile__data-type">Followers</div>
+            </div>
+            <div class="profile__data-item">
+              <div class="profile__data-number">388</div>
+              <div class="profile__data-type">Following</div>
+            </div>
+          </div>
+        </section>
+        <section class="userInfo">
+          <div>
+            <div class="userInfo__username">{{ user.name }}</div>
+            <div class="userInfo__category">컴퓨터 회사</div>
+            <div class="userInfo__description">
+              프로그래밍의 첫 걸음, 피로그래밍
+            </div>
+          </div>
+          <button class="userInfo__follow" id="follow-btn-{{ user.id }}" onclick="toggleFollow({{ user.id }})">
+            Follow
+          </button>
+        </section>
+        <aside class="highlights">
+          <div class="highlights__item">
+            <button class="highlights__item-image">
+              <img
+                src="{% static 'assets/images/piroLogo.png' %}"
+                alt="하이라이트 보기"
+              />
+            </button>
+            <div class="highlights_item-title">Title</div>
+          </div>
+          <div class="highlights__item">
+            <button class="highlights__item-image">
+              <img
+                src="{% static 'assets/images/piroLogo.png' %}"
+                alt="하이라이트 보기"
+              />
+            </button>
+            <div class="highlights_item-title">Title</div>
+          </div>
+          <div class="highlights__item">
+            <button class="highlights__item-image">
+              <img
+                src="{% static 'assets/images/piroLogo.png' %}"
+                alt="하이라이트 보기"
+              />
+            </button>
+            <div class="highlights_item-title">Title</div>
+          </div>
+          <div class="highlights__item">
+            <button class="highlights__item-image">
+              <img
+                src="{% static 'assets/images/piroLogo.png' %}"
+                alt="하이라이트 보기"
+              />
+            </button>
+            <div class="highlights_item-title">Title</div>
+          </div>
+        </aside>
+        <section class="posts">
+          <nav class="posts__tabBar">
+            <div class="posts__tab posts__tab--selected">1</div>
+            <div class="posts__tab">2</div>
+            <div class="posts__tab">3</div>
+          </nav>
+          <article class="posts__contents">
+            {% for post in posts %}
+              <div class="post">
+              {% for image in post.images.all %}
+              <a href="{% url 'pirostagram:detail' post.id %}">
+                <img src="{{ image.image.url }}" alt="Post image" style="max-width: 100%; height: auto;">
+              </a>
+              {% endfor %}
+              </div>
+            {% endfor %}
+
+          </article>
+        </section>
+      </main>
+      <footer>
+        <button class="navBar">
+          <svg aria-label="홈" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>홈</title><path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997A2.997 2.997 0 0 1 15 16.545V22h7V11.543L12 2 2 11.543V22h7.005Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </button>
+        <button class="navBar">
+          <svg aria-label="검색" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>검색</title><path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="16.511" x2="22" y1="16.511" y2="22"></line></svg>
+        </button>
+        <a href="{% url 'pirostagram:create_post' %}" class="navBar" style="margin-left: 6px;">
+          <svg aria-label="새로운 게시물" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>새로운 게시물</title><path d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="6.545" x2="17.455" y1="12.001" y2="12.001"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line></svg>
+        </a>
+        <button class="navBar">
+          <svg aria-label="탐색 탭" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>탐색 탭</title><path d="m13.173 13.164 1.491-3.829-3.83 1.49ZM12.001.5a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12.001.5Zm5.35 7.443-2.478 6.369a1 1 0 0 1-.57.569l-6.36 2.47a1 1 0 0 1-1.294-1.294l2.48-6.369a1 1 0 0 1 .57-.569l6.359-2.47a1 1 0 0 1 1.294 1.294Z"></path></svg>
+        </button>
+        <button class="navBar" id="footer-img">
+          <img src="{% static 'assets/images/profilePicture.jpg' %}" alt="" >
+        </button>
+      </footer>
+    </div>
+  </body>
+  <script>
+    const toggleFollow = async (userId) => {
+    const followBtn = document.querySelector(`#follow-btn-${userId}`);
+    const followersCountElem = document.getElementById("followers_count");
+
+    const isFollowing = followBtn.classList.contains('following');
+    const action = isFollowing ? 'unfollow' : 'follow';
+
+  try {
+    const response = await fetch('/follow_toggle/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCSRFToken(),
+      },
+      body: JSON.stringify({ user_id: userId, action: action }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      followersCountElem.textContent = data.followers_count;
+
+      if (action === 'follow') {
+        followBtn.classList.add('following');
+        followBtn.textContent = "Following";
+        followBtn.style.backgroundColor = 'black';
+        followBtn.style.border = '1px solid white';
+      } else {
+        followBtn.classList.remove('following');
+        followBtn.textContent = "Follow";
+        followBtn.style.backgroundColor = '';
+        followBtn.style.border = '';
+      }
+    } else {
+      console.error('Error while following/unfollowing');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getCSRFToken = () => {
+  const cookies = document.cookie.split(';');
+  for (let cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === 'csrftoken') {
+      return value;
+    }
+  }
+  return '';
+};
+  </script>
+  
+</html>
